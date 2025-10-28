@@ -4,9 +4,9 @@ import { Rodape } from "@/components/Rodape";
 import { SecaoContato } from "@/components/SecaoContato";
 import { SecaoExperiencia } from "@/components/SecaoExperiencia";
 import { SecaoHabilidades } from "@/components/SecaoHabilidades";
-import { SecaoHeroi } from "@/components/SecaoHeroi";
 import { SecaoProjetos } from "@/components/SecaoProjetos";
 import { SecaoSobre } from "@/components/SecaoSobre";
+import { SecaoHeroi } from "@/components/SecaoTopo";
 import type React from "react";
 import { useEffect, useState } from "react";
 export default function Home() {

@@ -2,14 +2,15 @@
 
 import { Button } from "@/components/ui/button";
 import data from "@/content/site.json";
+import { asset } from "@/lib/asset-path"; // <-- novo
 import { Code2, Github, Linkedin } from "lucide-react";
 import Image from "next/image";
 
 export function SecaoHeroi() {
-  // ---------------------------------------------------------------------------------
   // Sourcing da imagem a partir do JSON, com fallback seguro
-  // ---------------------------------------------------------------------------------
-  const fotoSrc = (data as any)?.perfil?.fotoHero?.src || "/FotoPerfilSite.jpg";
+  const fotoSrc = asset(
+    (data as any)?.perfil?.fotoHero?.src || "/FotoPerfilSite.jpg"
+  ); // <-- mudou
   const fotoAlt =
     (data as any)?.perfil?.fotoHero?.alt ||
     "Foto de perfil — Desenvolvedor Frontend";
@@ -17,9 +18,7 @@ export function SecaoHeroi() {
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* ---------------------------------------------------------------------- */}
-        {/* Coluna esquerda: título, resumo, CTAs e ícones sociais                 */}
-        {/* ---------------------------------------------------------------------- */}
+        {/* Coluna esquerda */}
         <div className="space-y-6 fade-in-up">
           <div className="space-y-2">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-balance">
@@ -91,18 +90,14 @@ export function SecaoHeroi() {
           </div>
         </div>
 
-        {/* ---------------------------------------------------------------------- */}
-        {/* Coluna direita: retrato (com fallback para o cartão com ícone)         */}
-        {/* ---------------------------------------------------------------------- */}
+        {/* Coluna direita: retrato */}
         <div
           className="hidden lg:block fade-in-up"
           style={{ animationDelay: "0.2s" }}
         >
-          {/* Se houver foto, renderiza a imagem; caso contrário, fallback do cartão */}
           {fotoSrc ? (
             <div className="relative w-full max-w-[520px] mx-auto">
               <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary/10 to-accent/10">
-                {/* Imagem de perfil responsiva, com prioridade para o LCP */}
                 <Image
                   src={fotoSrc}
                   alt={fotoAlt}
@@ -111,7 +106,6 @@ export function SecaoHeroi() {
                   priority
                   className="object-cover"
                 />
-                {/* halo / ring sutil para destacar */}
                 <div className="pointer-events-none absolute inset-0 ring-1 ring-black/5 dark:ring-white/10 rounded-2xl" />
               </div>
             </div>
