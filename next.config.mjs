@@ -1,10 +1,15 @@
+// next.config.mjs
+const isProd = process.env.NODE_ENV === "production";
+const repo = "SitePortifolio"; // Nome idêntico ao do seu repositório no GitHub
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  typescript: {},
-  images: {
-    unoptimized: true,
-  },
-}
+  images: { unoptimized: true },
+  basePath: isProd ? `/${repo}` : "",
+  assetPrefix: isProd ? `/${repo}/` : "",
+  trailingSlash: true,
+  reactStrictMode: true,
+};
 
-export default nextConfig
+export default nextConfig;
