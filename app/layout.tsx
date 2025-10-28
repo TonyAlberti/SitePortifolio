@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import data from "@/content/site.json";
-import { Analytics } from "@vercel/analytics/next";
+// import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type React from "react";
@@ -36,8 +36,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
 
-        {/* Analytics do Vercel (opcional) */}
-        <Analytics />
+        {/* <Analytics /> */}
       </body>
     </html>
   );

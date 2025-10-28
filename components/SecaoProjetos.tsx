@@ -2,6 +2,7 @@
 
 import { SeloTecnologia } from "@/components/SeloTecnologia";
 import data from "@/content/site.json";
+import { asset } from "@/lib/asset-path"; // <<< IMPORTANTE: helper que resolve basePath/assetPrefix
 import {
   ChevronLeft,
   ChevronRight,
@@ -10,19 +11,30 @@ import {
   X,
 } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-// ---------------- Modal de Galeria ----------------
+/**
+ * Modal de Galeria
+ * - Usa next/image com `unoptimized` para não depender do optimizer no export estático.
+ * - Todos os src passam por `asset(...)` para respeitar o basePath (GitHub Pages).
+ */
 function ModalGaleria({
   imagens,
   aberto,
   onFechar,
+  altBase = "Imagem do projeto",
 }: {
   imagens: ReadonlyArray<string>;
   aberto: boolean;
   onFechar: () => void;
+  altBase?: string;
 }) {
   const [idx, setIdx] = useState(0);
+
+  // Quando abrir com uma lista nova, sempre começa da primeira
+  useEffect(() => {
+    if (aberto) setIdx(0);
+  }, [aberto, imagens]);
 
   useEffect(() => {
     if (!aberto) return;
@@ -47,6 +59,9 @@ function ModalGaleria({
 
   if (!aberto) return null;
 
+  // Protege contra lista vazia
+  const atual = imagens[idx] ?? imagens[0] ?? "";
+
   return (
     <div
       className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
@@ -60,12 +75,14 @@ function ModalGaleria({
       >
         <div className="relative aspect-video">
           <Image
-            src={imagens[idx]}
-            alt={`Imagem ${idx + 1}`}
+            // Sempre resolvendo via asset()
+            src={asset(atual)}
+            alt={`${altBase} ${idx + 1}`}
             fill
             className="object-contain bg-black/50"
             sizes="(max-width: 768px) 100vw, 1024px"
             priority
+            unoptimized
           />
         </div>
 
@@ -100,23 +117,34 @@ function ModalGaleria({
   );
 }
 
-// ---------------- Seção Projetos ----------------
+/**
+ * Seção de Projetos
+ * - Converte as imagens do JSON com asset() logo na leitura.
+ * - Usa a galeria com imagens já resolvidas (sem “/” quebrado no GH Pages).
+ */
 export function SecaoProjetos() {
-  // Mapeia os campos do JSON para os nomes que o componente já usa
-  const projetos = data.projetos.itens.map((p) => ({
-    title: p.titulo,
-    description: p.descricao,
-    tags: p.tags,
-    repo: p.repo,
-    status: p.status as "Concluído" | "Em construção" | undefined,
-    imagens: p.imagens as ReadonlyArray<string>,
-  }));
+  // Mapeia os campos do JSON para o shape interno do componente
+  const projetos = useMemo(
+    () =>
+      data.projetos.itens.map((p) => ({
+        title: p.titulo,
+        description: p.descricao,
+        tags: p.tags,
+        repo: p.repo,
+        status: p.status as "Concluído" | "Em construção" | undefined,
+        // Resolve TODAS as imagens aqui (evita esquecer em algum lugar)
+        imagens: (p.imagens ?? []).map((src) => asset(src)),
+      })),
+    []
+  );
 
   const [aberto, setAberto] = useState(false);
   const [galeria, setGaleria] = useState<string[]>([]);
+  const [altBase, setAltBase] = useState<string>("Imagem do projeto");
 
-  const abrirGaleria = (imagens: ReadonlyArray<string>) => {
+  const abrirGaleria = (titulo: string, imagens: ReadonlyArray<string>) => {
     if (!imagens?.length) return;
+    setAltBase(`Imagens do projeto ${titulo} — slide`);
     setGaleria([...imagens]);
     setAberto(true);
   };
@@ -144,7 +172,7 @@ export function SecaoProjetos() {
                   className="p-6 rounded-xl bg-background border border-border hover:border-primary transition-all duration-500 hover:shadow-lg fade-in-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  {/* título e descrição */}
+                  {/* Título e descrição */}
                   <h3 className="text-xl font-semibold mb-2">
                     {project.title}
                   </h3>
@@ -152,14 +180,14 @@ export function SecaoProjetos() {
                     {project.description}
                   </p>
 
-                  {/* chips */}
+                  {/* Tecnologias */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tags.map((tag) => (
                       <SeloTecnologia key={tag} nome={tag} />
                     ))}
                   </div>
 
-                  {/* status */}
+                  {/* Status */}
                   {project.status && (
                     <span
                       className={`inline-block mb-4 px-2 py-1 text-xs font-semibold rounded border
@@ -173,12 +201,14 @@ export function SecaoProjetos() {
                     </span>
                   )}
 
-                  {/* botões */}
+                  {/* Ações */}
                   <div className="flex items-center gap-4">
                     {temImagens ? (
                       <button
                         type="button"
-                        onClick={() => abrirGaleria(project.imagens)}
+                        onClick={() =>
+                          abrirGaleria(project.title, project.imagens)
+                        }
                         className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-all duration-300 hover:gap-3"
                         aria-label={`Ver imagens de ${project.title}`}
                       >
@@ -219,6 +249,7 @@ export function SecaoProjetos() {
         imagens={galeria}
         aberto={aberto}
         onFechar={fecharGaleria}
+        altBase={altBase}
       />
     </section>
   );
