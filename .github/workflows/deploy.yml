@@ -1,8 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (Next.js Export)
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -10,8 +11,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -23,13 +24,27 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: "npm"
 
-      - name: Install deps (CI)
+      - name: Install deps
         run: npm ci
 
-      - name: Build static site (Next.js export)
-        run: npm run build
+      - name: Build (Next export)
+        env:
+          # Garante que seu next.config use o basePath certo em produção, se você for usar variável.
+          NODE_ENV: production
+        run: |
+          npm run build
+          # se seu package.json tiver "build": "next build && next export -o out",
+          # a pasta final será "out/". Ajuste se necessário.
+
+      # (Opcional) Corrige roteamento SPA no Pages (copia index.html para 404.html)
+      - name: Create 404.html for SPA routes
+        run: |
+          if [ -f out/index.html ]; then
+            cp out/index.html out/404.html
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -38,10 +53,10 @@ jobs:
 
   deploy:
     needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
