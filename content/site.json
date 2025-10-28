@@ -1,0 +1,112 @@
+{
+  "site": {
+    "lang": "pt-BR",
+    "title": "Tony Alberti | Desenvolvedor Frontend / Full Stack Júnior",
+    "description": "Portfólio do Tony Alberti, desenvolvedor frontend focado em React, TypeScript e Next.js, evoluindo em Go e Node.js. Projetos, habilidades e contato."
+  },
+  "perfil": {
+    "nomeCurto": "Tony Alberti",
+    "nomeCompleto": "Tony Alberti Mendes",
+    "titulo": "Desenvolvedor Frontend / Full Stack Júnior",
+    "localidade": "São Paulo - SP",
+    "email": "tonymendesspfc@outlook.com",
+    "telefone": "+55 11 98112-3252",
+    "whatsapp": "+55 11 98112-3252",
+    "linkedin": "https://www.linkedin.com/in/tonyalberti-/",
+    "github": "https://github.com/TonyAlberti",
+    "resumoHero": "Desenvolvedor fullstack focado em criar interfaces acessíveis, performáticas e bem estruturadas com React, TypeScript e Next.js.",
+    "resumoDetalhe": "Aplicando diariamente fundamentos  e boas práticas (Clean Code, acessibilidade, testes e performance) para entregar soluções claras, escaláveis e fáceis de manter.",
+    "fotoHero": {
+      "src": "/FotoPerfilSite.jpg",
+      "alt": "Tony Alberti — desenvolvedor frontend (foto profissional)"
+    }
+  },
+  "navegacao": {
+    "logoTitulo": "Desenvolvedor Fullstack",
+    "links": [
+      { "id": "about", "rotulo": "Sobre" },
+      { "id": "experience", "rotulo": "Experiência" },
+      { "id": "projects", "rotulo": "Projetos" },
+      { "id": "contact", "rotulo": "Contato" }
+    ],
+    "toggleTemaAria": "Alternar tema"
+  },
+  "sobre": {
+    "titulo": "Sobre mim",
+    "texto": "Sou desenvolvedor fullstack focado em construir aplicações modernas, performáticas e acessíveis. Trabalho com seriedade e base sólida — aplico boas práticas, padrões e arquitetura para entregar código claro, escalável e fácil de manter. Encaro novos desafios com curiosidade e responsabilidade, comunicando bem e buscando sempre o porquê das soluções.",
+    "pilares": [
+      {
+        "titulo": "Código limpo",
+        "texto": "Componentes coesos, nomes expressivos e testes quando fizer sentido. Prioridade para clareza e manutenibilidade."
+      },
+      {
+        "titulo": "Performance",
+        "texto": "Otimização de render, lazy loading e atenção a métricas (LCP/CLS). Sem micro-otimização prematura."
+      },
+      {
+        "titulo": "Colaboração",
+        "texto": "Workflow claro com designers e backend. Comunicação objetiva e documentação do que importa."
+      }
+    ]
+  },
+  "experiencia": [],
+  "habilidades": {
+    "titulo": "Experiência Técnica",
+    "grupos": [
+      {
+        "categoria": "Frontend",
+        "skills": ["React", "TypeScript", "Next.js", "Tailwind CSS"]
+      },
+      {
+        "categoria": "Back-end (em evolução)",
+        "skills": ["Go", "Node.js", "Express", "GraphQL"]
+      },
+      {
+        "categoria": "Ferramentas & Plataformas",
+        "skills": ["Git", "GitHub", "Vercel", "Docker", "CI/CD"]
+      },
+      {
+        "categoria": "Soft Skills",
+        "skills": ["Resolução de Problemas", "Comunicação", "Colaboração", "Autodisciplina"]
+      }
+    ]
+  },
+  "projetos": {
+    "titulo": "Projetos em Destaque",
+    "itens": [
+      {
+        "titulo": "CineBase",
+        "descricao": "Plataforma de streaming moderna com React, Tailwind CSS e Go, usando GraphQL, autenticação e integrações (OMDb). Funcionalidades: busca, rankings e sorteios de recomendações.",
+        "tags": ["React", "TypeScript", "Tailwind CSS", "Go", "Next.js"],
+        "repo": "https://github.com/TonyAlberti/CineBase",
+        "status": "Concluído",
+        "imagens": ["/CineBase.png", "/CineBase02.png"]
+      },
+      {
+        "titulo": "Point_of_Sale",
+        "descricao": "Sistema de ponto de venda (PDV) com React/TypeScript no front e Node.js (Express) no back. Registro de vendas, totais e impressão via rota /print. Layout responsivo com Tailwind.",
+        "tags": ["React", "TypeScript", "Tailwind CSS"],
+        "repo": "https://github.com/TonyAlberti/Point_of_Sale",
+        "status": "Concluído",
+        "imagens": ["/Point_of_Sale.png"]
+      },
+      {
+        "titulo": "Sistema Financeiro Pessoal",
+        "descricao": "Plataforma para controle financeiro pessoal com múltiplas contas e relatórios. Atualmente em desenvolvimento.",
+        "tags": ["React", "TypeScript", "Tailwind CSS"],
+        "repo": "https://github.com/TonyAlberti/sistema-financeiro-pessoal",
+        "status": "Em construção",
+        "imagens": ["/ContaDigital.png", "/ContaDigital02.png"]
+      }
+    ]
+  },
+  "contato": {
+    "titulo": "Vamos conversar?",
+    "descricao": "Aberto a oportunidades, freelas e colaborações. Me chame para conversar sobre seu projeto ou proposta.",
+    "ctaPrincipalRotulo": "Enviar e-mail",
+    "ctaSecundarioRotulo": "Conectar no LinkedIn"
+  },
+  "rodape": {
+    "texto": "Desenvolvedor Frontend — Tony Alberti."
+  }
+}
