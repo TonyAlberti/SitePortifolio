@@ -1,4 +1,5 @@
 // next.config.ts
+
 const isProd = process.env.NODE_ENV === "production";
 const repo = "SitePortifolio";
 
@@ -9,6 +10,7 @@ const nextConfig = {
   basePath: isProd ? `/${repo}` : "",
   assetPrefix: isProd ? `/${repo}/` : "",
   trailingSlash: true,
+  reactStrictMode: true,
 };
 
 export default nextConfig;
