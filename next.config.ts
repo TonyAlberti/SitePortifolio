@@ -1,6 +1,6 @@
 // next.config.ts
 const isProd = process.env.NODE_ENV === "production";
-const repo = "NOME-DO-REPO"; // ex.: "site-portfolio" (sem /)
+const repo = "SitePortifolio"; // <- exatamente como no GitHub
 
 const nextConfig = {
   /** Exporta HTML estático para o GitHub Pages */
