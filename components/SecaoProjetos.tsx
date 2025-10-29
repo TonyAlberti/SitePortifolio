@@ -2,7 +2,7 @@
 
 import { SeloTecnologia } from "@/components/SeloTecnologia";
 import data from "@/content/site.json";
-import { asset } from "@/lib/asset-path"; // <<< IMPORTANTE: helper que resolve basePath/assetPrefix
+import { asset } from "@/lib/asset-path";
 import {
   ChevronLeft,
   ChevronRight,
@@ -13,11 +13,11 @@ import {
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-/**
- * Modal de Galeria
- * - Usa next/image com `unoptimized` para não depender do optimizer no export estático.
- * - Todos os src passam por `asset(...)` para respeitar o basePath (GitHub Pages).
- */
+/* --------------------------------------------------------------------------------
+   Modal de Galeria
+   - Recebe imagens já resolvidas (prefixadas) pelo helper asset().
+   - Não aplique asset() aqui novamente para evitar duplicação do basePath.
+---------------------------------------------------------------------------------*/
 function ModalGaleria({
   imagens,
   aberto,
@@ -31,7 +31,6 @@ function ModalGaleria({
 }) {
   const [idx, setIdx] = useState(0);
 
-  // Quando abrir com uma lista nova, sempre começa da primeira
   useEffect(() => {
     if (aberto) setIdx(0);
   }, [aberto, imagens]);
@@ -59,7 +58,6 @@ function ModalGaleria({
 
   if (!aberto) return null;
 
-  // Protege contra lista vazia
   const atual = imagens[idx] ?? imagens[0] ?? "";
 
   return (
@@ -75,8 +73,7 @@ function ModalGaleria({
       >
         <div className="relative aspect-video">
           <Image
-            // Sempre resolvendo via asset()
-            src={asset(atual)}
+            src={atual} // <- já prefixado; não usar asset() aqui
             alt={`${altBase} ${idx + 1}`}
             fill
             className="object-contain bg-black/50"
@@ -117,13 +114,12 @@ function ModalGaleria({
   );
 }
 
-/**
- * Seção de Projetos
- * - Converte as imagens do JSON com asset() logo na leitura.
- * - Usa a galeria com imagens já resolvidas (sem “/” quebrado no GH Pages).
- */
+/* --------------------------------------------------------------------------------
+   Seção Projetos
+   - Converte as imagens do JSON com asset() apenas uma vez.
+   - Evita esquecer prefixo/basePath em qualquer lugar que use essas imagens.
+---------------------------------------------------------------------------------*/
 export function SecaoProjetos() {
-  // Mapeia os campos do JSON para o shape interno do componente
   const projetos = useMemo(
     () =>
       data.projetos.itens.map((p) => ({
@@ -132,8 +128,7 @@ export function SecaoProjetos() {
         tags: p.tags,
         repo: p.repo,
         status: p.status as "Concluído" | "Em construção" | undefined,
-        // Resolve TODAS as imagens aqui (evita esquecer em algum lugar)
-        imagens: (p.imagens ?? []).map((src) => asset(src)),
+        imagens: (p.imagens ?? []).map((src) => asset(src)), // <- resolve aqui
       })),
     []
   );
@@ -145,7 +140,7 @@ export function SecaoProjetos() {
   const abrirGaleria = (titulo: string, imagens: ReadonlyArray<string>) => {
     if (!imagens?.length) return;
     setAltBase(`Imagens do projeto ${titulo} — slide`);
-    setGaleria([...imagens]);
+    setGaleria([...imagens]); // já resolvidas
     setAberto(true);
   };
 

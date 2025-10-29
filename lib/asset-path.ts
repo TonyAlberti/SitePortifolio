@@ -1,9 +1,15 @@
-// Helper para construir caminhos de assets que funcionem no GitHub Pages
-export const assetPrefix =
-  process.env.NODE_ENV === "production" ? "/SitePortifolio" : "";
+const BASE = process.env.NODE_ENV === "production" ? "/SitePortifolio" : "";
 
 export function asset(path: string) {
-  // garante a / no início e prefixa quando necessário
+  if (!path) return "";
   const clean = path.startsWith("/") ? path : `/${path}`;
-  return `${assetPrefix}${clean}`;
+
+  if (BASE && clean.startsWith(`${BASE}/`)) return clean;
+
+  // Se for URL absoluta (http/https), não mexe
+  if (/^https?:\/\//i.test(clean)) return clean;
+
+  return `${BASE}${clean}`;
 }
+
+export const assetPrefix = BASE;
