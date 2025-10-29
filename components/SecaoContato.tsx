@@ -23,11 +23,6 @@ export function SecaoContato() {
             className="flex flex-col sm:flex-row gap-4 justify-center fade-in-up"
             style={{ animationDelay: "0.1s" }}
           >
-            <a href={`mailto:${data.perfil.email}`}>
-              <Button size="lg" variant="secondary" className="btn-hover">
-                {data.contato.ctaPrincipalRotulo}
-              </Button>
-            </a>
             <a
               href={data.perfil.linkedin}
               target="_blank"

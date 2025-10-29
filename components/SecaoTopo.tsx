@@ -10,7 +10,7 @@ export function SecaoHeroi() {
   // Sourcing da imagem a partir do JSON, com fallback seguro
   const fotoSrc = asset(
     (data as any)?.perfil?.fotoHero?.src || "/FotoPerfilSite.jpg"
-  ); // <-- mudou
+  );
   const fotoAlt =
     (data as any)?.perfil?.fotoHero?.alt ||
     "Foto de perfil — Desenvolvedor Frontend";

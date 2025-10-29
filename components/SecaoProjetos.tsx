@@ -15,8 +15,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 /* --------------------------------------------------------------------------------
    Modal de Galeria
-   - Recebe imagens já resolvidas (prefixadas) pelo helper asset().
-   - Não aplique asset() aqui novamente para evitar duplicação do basePath.
 ---------------------------------------------------------------------------------*/
 function ModalGaleria({
   imagens,
@@ -116,9 +114,7 @@ function ModalGaleria({
 
 /* --------------------------------------------------------------------------------
    Seção Projetos
-   - Converte as imagens do JSON com asset() apenas uma vez.
-   - Evita esquecer prefixo/basePath em qualquer lugar que use essas imagens.
----------------------------------------------------------------------------------*/
+-------------------------------------------------------------------------------*/
 export function SecaoProjetos() {
   const projetos = useMemo(
     () =>

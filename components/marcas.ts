@@ -23,7 +23,6 @@ export type Marca = {
 
 /**
  * Mapa por "label" exatamente como será exibido nos badges.
- * Se quiser mudar o texto ex.: "Node" → "Node.js"
  */
 export const MARCAS: Record<string, Marca> = {
   React: pick(siReact),

@@ -5,8 +5,6 @@ import data from "@/content/site.json";
 
 /**
  * Seção "Experiência Técnica" — usa os grupos de habilidades
- * para aparecer quando o usuário clica em "Experiência".
- * Mantemos o id="experience" para a âncora do menu continuar funcionando.
  */
 export function SecaoExperiencia() {
   const grupos = data.habilidades?.grupos ?? [];
