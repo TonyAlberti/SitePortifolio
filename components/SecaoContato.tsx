@@ -4,12 +4,15 @@ import { Github, Linkedin } from "lucide-react";
 
 /**
  * Seção "Contato" consumindo JSON.
+ * - Adicionamos novamente o botão de e-mail usando mailto.
+ * - Mantemos LinkedIn como CTA secundário.
  */
 export function SecaoContato() {
   return (
     <section id="contact" className="bg-primary text-primary-foreground">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
         <div className="text-center space-y-8">
+          {/* Título + descrição */}
           <div className="space-y-4 fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold">
               {data.contato.titulo}
@@ -19,10 +22,26 @@ export function SecaoContato() {
             </p>
           </div>
 
+          {/* Botões principais */}
           <div
             className="flex flex-col sm:flex-row gap-4 justify-center fade-in-up"
             style={{ animationDelay: "0.1s" }}
           >
+            {/* Botão: enviar e-mail */}
+            <a href={`mailto:${data.perfil.email}`}>
+              <Button
+                size="lg"
+                className="
+                  bg-primary-foreground text-primary
+                  hover:bg-primary-foreground/90
+                  btn-hover cursor-pointer
+                "
+              >
+                {data.contato.ctaPrincipalRotulo}
+              </Button>
+            </a>
+
+            {/* Botão: LinkedIn */}
             <a
               href={data.perfil.linkedin}
               target="_blank"
@@ -31,13 +50,18 @@ export function SecaoContato() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 bg-transparent btn-hover"
+                className="
+                  border-primary-foreground text-primary-foreground
+                  hover:bg-primary-foreground/10 bg-transparent
+                  btn-hover cursor-pointer
+                "
               >
                 {data.contato.ctaSecundarioRotulo}
               </Button>
             </a>
           </div>
 
+          {/* Ícones sociais */}
           <div
             className="flex justify-center gap-6 pt-8 fade-in-up"
             style={{ animationDelay: "0.2s" }}
